@@ -4,6 +4,8 @@ import org.example.trainingspringboot.Entity.User;
 import org.example.trainingspringboot.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -27,5 +29,16 @@ public class UserService {
 
             return userRepository.addUser(user);
         }
+    }
+
+    public User editUser(int id, User user){
+        return  userRepository.updateUser(id, user);
+    }
+    public void deleteUser(int id){
+       userRepository.deleteUserById(id);
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.getAllUsers();
     }
 }

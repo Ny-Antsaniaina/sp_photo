@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class UserRepository {
@@ -69,5 +71,53 @@ public class UserRepository {
             System.err.println(e.getMessage());
         }
         return user;
+    }
+
+    public User updateUser(int id ,  User user){
+        String sql = "update users set username = ?, name = ? where id = ?";
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1,user.getUsername());
+            statement.setString(2,user.getName());
+            statement.setInt(3,id);
+            statement.executeUpdate();
+
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return user;
+    }
+
+    public void deleteUserById(int id){
+        String sql = "delete from users where id = ?";
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            System.out.print("deleteUserById success");
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+    public List<User> getAllUsers(){
+        String sql = "select * from users";
+        List<User> users = new ArrayList<>();
+        try(Connection connection = dataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setName(resultSet.getString("name"));
+                user.setCreatedAt(resultSet.getDate("created_at"));
+                users.add(user);
+            }
+        }catch (SQLException e){
+            System.err.println(e.getMessage());
+        }
+        return users;
     }
 }

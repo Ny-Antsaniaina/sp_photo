@@ -12,4 +12,5 @@ public class Image {
     private int id;
     private String name;
     private String url;
+    private User username;
 }
