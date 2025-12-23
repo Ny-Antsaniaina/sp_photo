@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Image {
-    private Integer id;
+    private int id;
     private String name;
     private String url;
 }
