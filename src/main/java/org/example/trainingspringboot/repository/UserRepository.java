@@ -81,7 +81,6 @@ public class UserRepository {
             statement.setString(2,user.getName());
             statement.setInt(3,id);
             statement.executeUpdate();
-
         }catch (SQLException e){
             System.err.println(e.getMessage());
         }
